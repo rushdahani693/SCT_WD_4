@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <button class="hamburger" onclick="toggleSidebar()">☰</button>
+  <h1>🌸 Your To-Do Tracker 🌸</h1>
+</header>
+
+<div class="sidebar" id="sidebar">
+  <h2>Menu</h2>
+  <a href="#" onclick="showPage('home')">🏠 Home</a>
+  <a href="#" onclick="showPage('tasks')">📝 Tasks</a>
+  <a href="#" onclick="showPage('profile')">👤 Profile</a>
+  <a href="#" onclick="showPage('settings')">⚙️ Settings</a>
+  <a href="#" onclick="openLogout()">🚪 Logout</a>
+</div>
+
+<main>
+  <!-- Home Page -->
+  <section id="home" class="home page">
+    <div class="hero">
+      <h1>Welcome</h1>
+      <p>Organize your life with simplicity and elegance. Plan, track, and achieve your goals with your productivity app.</p>
+    </div>
+    <div class="motivation-card">
+      <h3>✨ Daily Motivation</h3>
+      <p>"Small progress each day leads to big results."</p>
+    </div>
+    <div class="features">
+      <div class="feature-card"><h3>📝 Smart Tasks</h3><p>Easily add, edit, and track tasks with deadlines.</p></div>
+      <div class="feature-card"><h3>📊 Insights</h3><p>View completion and pending tasks at a glance.</p></div>
+      <div class="feature-card"><h3>👤 Profile</h3><p>Manage your profile securely.</p></div>
+      <div class="feature-card themes"><h3>🎨 Themes</h3><p>Choose pastel colors to match your mood.</p></div>
+    </div>
+  </section>
+
+  <!-- Tasks Page -->
+  <section id="tasks" class="page" style="display:none;">
+    <h2>📝 My Tasks</h2>
+    <div class="insights">
+      <div class="insight-card"><h3 id="totalCount">0</h3><p>Total</p></div>
+      <div class="insight-card"><h3 id="completedCount">0</h3><p>Completed</p></div>
+      <div class="insight-card"><h3 id="pendingCount">0</h3><p>Pending</p></div>
+      <div class="insight-card"><h3 id="overdueCount">0</h3><p>Overdue</p></div>
+    </div>
+    <div class="task-input">
+      <input type="text" id="taskText" placeholder="Enter task...">
+      <input type="datetime-local" id="taskDate">
+      <button onclick="addTask()">➕ Add Task</button>
+    </div>
+    <div class="tasks" id="calendarEvents"></div>
+  </section>
+
+  <!-- Profile Page -->
+  <section id="profile" class="page" style="display:none;">
+    <form class="profile-form">
+      <h2>👤 Create Your Profile</h2>
+      <label>Username</label><input type="text" required>
+      <label>First Name</label><input type="text" required>
+      <label>Last Name</label><input type="text" required>
+      <label>Email</label><input type="email" required>
+      <label>Phone Number</label><input type="tel" required>
+      <label>Password</label><input type="password" required>
+      <div class="profile-buttons">
+        <button type="submit" class="create-btn">✅ Create Profile</button>
+        <button type="reset" class="reset-btn">🧹 Reset</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Settings Page -->
+  <section id="settings" class="page" style="display:none;">
+    <div class="settings">
+      <h2>⚙️ Settings</h2>
+      <div class="settings-section">
+        <h3>🎨 Theme</h3>
+        <div class="theme-circles">
+          <div class="theme-circle" style="background:#a18cd1" onclick="changeTheme('default')"></div>
+          <div class="theme-circle" style="background:#a8edea" onclick="changeTheme('mint')"></div>
+          <div class="theme-circle" style="background:#89f7fe" onclick="changeTheme('blue')"></div>
+          <div class="theme-circle" style="background:#fddb92" onclick="changeTheme('yellow')"></div>
+          <div class="theme-circle" style="background:#43e97b" onclick="changeTheme('aqua')"></div>
+          <div class="theme-circle" style="background:#ffb3ba" onclick="changeTheme('pink')"></div>
+          <div class="theme-circle" style="background:#bae1ff" onclick="changeTheme('lightBlue')"></div>
+          <div class="theme-circle" style="background:#ffffba" onclick="changeTheme('lightYellow')"></div>
+          <div class="theme-circle" style="background:#c1fba4" onclick="changeTheme('mintGreen')"></div>
+          <div class="theme-circle" style="background:#ffd6f6" onclick="changeTheme('lavender')"></div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3>🔔 Notifications</h3>
+        <label><input type="checkbox"> Email</label>
+        <label><input type="checkbox"> SMS</label>
+        <label><input type="checkbox"> Push Notifications</label>
+      </div>
+
+      <div class="settings-section">
+        <h3>👤 Account</h3>
+        <button onclick="alert('Change password')" class="account-btn change">🔑 Change Password</button>
+        <button onclick="alert('Delete account')" class="account-btn delete">🗑️ Delete Account</button>
+      </div>
+
+      <div class="settings-section">
+        <h3>📝 Task Preferences</h3>
+        <label><input type="checkbox"> Show overdue tasks</label>
+        <label>Sort tasks by:
+          <select>
+            <option>Date</option>
+            <option>Completion</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logout Modal -->
+  <div class="modal" id="logoutModal">
+    <div class="modal-content">
+      <h3>🚪 Are you sure you want to logout?</h3>
+      <div class="modal-buttons">
+        <button class="cancel-btn" onclick="closeLogout()">Cancel</button>
+        <button class="logout-btn" onclick="confirmLogout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
